@@ -1,0 +1,27 @@
+/**
+ * Get clientId & secret at https://skills.emsidata.com/access
+ */
+
+
+function getToken() {
+  const url = 'https://auth.emsicloud.com/connect/token';
+  const clientId = '';
+  const secret = '';
+  const options = {
+    method: 'POST',
+    timeout: 0,
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    payload: {
+      client_id: clientId,
+      client_secret: secret,
+      grant_type: 'client_credentials',
+      scope: 'emsi_open'
+    }
+  }
+
+  let response = UrlFetchApp.fetch(url,options);
+  let json = JSON.parse(response);
+  let token = json.access_token;
+
+  return token;
+}

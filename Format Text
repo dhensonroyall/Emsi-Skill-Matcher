@@ -1,0 +1,24 @@
+function textFromDoc(url) {
+
+  const doc = DocumentApp.openByUrl(url);
+  let text = doc.getBody().getText();
+  console.log('Resume formatted');
+  return text;
+
+}
+
+function textFromGreenhouse(url) {
+
+  const page = UrlFetchApp.fetch(url);
+  let html = page.getContentText();
+  let start = html.indexOf('<div id="content"') >= 0 ? html.indexOf('<div id="content"') : html.indexOf("<div id='content'");
+  let end = html.indexOf("<div id='application'") >= 0 ? html.indexOf("<div id='application'") : html.indexOf('<div id="application"');
+  let body = html.slice(start,end);
+  let text = body
+    .replace(/<[^>]*>/g,' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+  
+  console.log('Job posting formatted');
+  return text;
+}

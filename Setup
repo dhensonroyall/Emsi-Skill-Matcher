@@ -1,0 +1,10 @@
+const ss = SpreadsheetApp.getActive();
+const urlStub = 'https://emsiservices.com/skills';
+
+function onOpen() {
+  
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu('Compare Skills')
+    .addItem('Compare Skills Now','compareSkills')
+    .addToUi();
+}

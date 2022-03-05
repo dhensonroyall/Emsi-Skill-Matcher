@@ -2,8 +2,8 @@
 Extract &amp; compare skills from your resume and a job posting
 
 **Credit to Emsi Burning Glass**
-https://skills.emsidata.com/
-Get Access, see documentation, and use the pre-created tools there
+* https://skills.emsidata.com/
+* Get Access, see documentation, and use the pre-created tools there
 
 I wanted to use the Emsi Skills API to compare my resume to a job posting by extracting skills to see what matches, what's missing from my resume, and what on my resume is "useless" for the job posting.
 

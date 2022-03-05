@@ -1,0 +1,59 @@
+/**
+ * Format text from Google Doc via link
+ * Extracts skills via EMSI API: https://api.emsidata.com/apis/skills#post-extract-skills-from-document
+ * Repeats for Greenhouse.io job board posting
+ * Compares skills, creates lists of matched, missing, and "useless" skills
+ * Lists these in spreadsheet
+ */
+
+function compareSkills() {
+
+  const sheet = ss.getSheetByName('Job Posting Review');
+  const resumeUrl = sheet.getRange(1,2).getValue();
+  const resumeText = textFromDoc(resumeUrl);
+  let resumeSkills = extractSkills(resumeText);
+
+  const postingUrl = sheet.getRange(2,2).getValue();
+  const postingText = textFromGreenhouse(postingUrl);
+  const postingSkills = extractSkills(postingText);
+
+  const matched = new Array();
+  const missing = new Array();
+  const useless = new Array();
+
+  resumeSkills.forEach(r => {
+    let match;
+    postingSkills.forEach(p => {
+      if (r.id === p.id) {
+        match = true;
+      };
+    });
+    if (match) {
+      matched.push([r.name,r.category,r.confidence,r.url])
+    } else {
+      useless.push([r.name,r.category,r.confidence,r.url])
+    };
+  });
+
+  postingSkills.forEach(p => {
+    let match;
+    resumeSkills.forEach(r=> {
+      if (r.id === p.id) {
+        match = true;
+      };
+    });
+    if (!match) {
+      missing.push([p.name,p.category,p.confidence,p.url]);
+    };
+  });
+
+  matched.unshift(['MATCHED',matched.length,null,null]);
+  missing.unshift([null,null,null,null],['MISSING',missing.length,null,null]);
+  useless.unshift([null,null,null,null],['USELESS',useless.length,null,null]);
+
+  let array = [['Name','Category','Confidence','URL']];
+  array = array.concat([...matched],[...missing],[...useless])
+
+  sheet.getRange(3,1,array.length,4).setValues(array);
+  
+}

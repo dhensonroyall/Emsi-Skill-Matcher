@@ -14,7 +14,7 @@ This isn't perfect, but it gives some quick insight which is helpful.
 * Job posting must be on a Greenhouse job board
 
 **Instructions**
-1. Copy the Google Sheet & Apps Script: https://docs.google.com/spreadsheets/d/1_qLKtICWaB_7XL645B8__EgHeh3SjrbbO9gIO0gwBZE/edit#gid=322435105
+1. Copy the Google Sheet & Apps Script: https://docs.google.com/spreadsheets/d/1_qLKtICWaB_7XL645B8__EgHeh3SjrbbO9gIO0gwBZE/template/preview
    Or create your own using this repository
 2. Get your API access: https://skills.emsidata.com/access
 3. Open Apps Script and enter clientId & secret credentials into Token.gs file

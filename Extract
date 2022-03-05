@@ -1,0 +1,42 @@
+function extractSkills(text) {
+
+  const blob = Utilities.newBlob(text,MimeType.PLAIN_TEXT);
+  const url = `${urlStub}/versions/latest/extract`;
+  const token = getToken();
+  const options = {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      // contentType: 'application/json',
+      'Content-Type': 'text/plain'
+    },
+    payload: {
+      'text': blob,
+      'confidenceThreshold': 0.5
+    },
+    json: true,
+    muteHttpExceptions: true
+  };
+
+  const response = UrlFetchApp.fetch(url,options);
+  console.log(`Code ${response.getResponseCode()} received`);
+  let content = response.getContentText();
+  let json = JSON.parse(response);
+  let data = json.data;
+  let skills = extractSkillArray(data);
+  return skills;
+
+}
+
+function extractSkillArray(data) {
+  const skills = new Array();
+  data.forEach(skill => {
+    skills.push({
+      id:skill.skill.id,
+      name:skill.skill.name,
+      url:skill.skill.infoUrl,
+      category:skill.skill.type.name,
+      confidence:skill.confidence});
+  });
+  return skills;
+}
